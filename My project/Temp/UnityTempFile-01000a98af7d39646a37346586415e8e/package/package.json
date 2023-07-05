@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "com.unity.feature.2d": "1.0.0",
+    "com.unity.collab-proxy": "1.9.0",
+    "com.unity.ide.rider": "3.0.7",
+    "com.unity.ide.visualstudio": "2.0.11",
+    "com.unity.ide.vscode": "1.2.4",
+    "com.unity.test-framework": "1.1.29",
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.timeline": "1.6.2",
+    "com.unity.ugui": "1.0.0",
+    "com.unity.visualscripting": "1.7.2"
+  },
+  "description": "This is an empty project configured for 2D apps. It uses Unity's built-in renderer.",
+  "displayName": "2D",
+  "host": "hub",
+  "name": "com.unity.template.2d",
+  "type": "template",
+  "unity": "2021.2",
+  "version": "6.1.1",
+  "_upm": {
+    "changelog": "### Added\n- Added PS5 to QualitySettings.asset.\n- Added GameCore platforms to QualitySettings.asset."
+  },
+  "upmCi": {
+    "footprint": "91bf95eb07a6a49fc6ab89ad6c25decba3776a8d"
+  },
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/2d.git",
+    "type": "git",
+    "revision": "05fea8290f72496fca325fb307a923627d617671"
+  }
+}
