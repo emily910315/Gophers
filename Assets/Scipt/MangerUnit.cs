@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MangerUnit : MonoBehaviour
 {
@@ -11,12 +12,7 @@ public class MangerUnit : MonoBehaviour
 
     private int m_Hp = 0;
     private float m_RemoveTime = 0;
-    private UnityEngine.UI.Text m_HitTimes = null;
-    private void Awake()
-    {
-        m_HitTimes = gameObject.GetComponentInChildren<UnityEngine.UI.Text>();
-        FindObjectsOfType<MangerUnit>();
-    }
+
     public void OnClickMonster()
     {
         if (m_IsCanClick == false)
@@ -24,7 +20,6 @@ public class MangerUnit : MonoBehaviour
             return;
         }
         m_Hp --;
-        m_HitTimes.text = m_Hp.ToString();
         if (m_Hp <= 0)
         {
             GameManger.m_Main.AddScore(1);
@@ -89,7 +84,6 @@ public class MangerUnit : MonoBehaviour
         AddTime();
         m_RemoveTime = 0;
         m_Hp = GameManger.m_Main.GetHardRank();
-        m_HitTimes.text = m_Hp.ToString();
         m_RemoveTime = 0;
         transform.localScale = new Vector3(1f, 1f, 1f);
         m_IsLive = true;
@@ -99,7 +93,7 @@ public class MangerUnit : MonoBehaviour
     }
      private void AddTime()
     {
-        m_Time = Time.time + Random.Range(0.3f, 5f);
+        m_Time = Time.time + Random.Range(0.3f, 0.3f);
     }   
     
 }

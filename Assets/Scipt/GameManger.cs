@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class GameManger : MonoBehaviour
 {
     public static GameManger m_Main = null;
-    public UnityEngine.UI.Text m_LiveValue = null;
-    public UnityEngine.UI.Text m_Score = null;
+    public Text m_LiveValue = null;
+    public Text m_Score = null;
     public MangerUnit[] m_AllUnit=null;
     public int m_NowScore = 0;
     private int m_Live = 5;
