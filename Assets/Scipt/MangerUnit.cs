@@ -10,11 +10,43 @@ public class MangerUnit : MonoBehaviour
     private bool m_IsLive = false;
     private bool m_IsCanClick = false;
 
-    private int m_Hp;//¥Í©R­È
+    private int m_Hp;//ç”Ÿå‘½å€¼
     private float m_RemoveTime = 0;
     private int m_MaxHp;
     private Dictionary<MangerUnit, int> m_MaxHpDict = new Dictionary<MangerUnit, int>();
 
+    void Start()
+    {
+        AddTime();
+        m_Hp = m_MaxHp; // è¨­å®šåœ°é¼ çš„ç•¶å‰ç”Ÿå‘½å€¼ç‚ºæœ€å¤§ç”Ÿå‘½å€¼
+        //gameObject.SetActive(true);
+    }
+
+    void Update()
+    {
+        if (m_IsLive)
+        {
+            if (transform.localScale.x < 1)
+            {
+                transform.localScale += new Vector3(1f, 1f, 1f) * Time.deltaTime;
+            }
+            else
+            {
+                m_IsCanClick = true;
+
+            }
+            if (m_IsCanClick)
+            {
+                m_RemoveTime += Time.deltaTime;
+                int limitTime = 5 - GameManger.m_Main.GetHardRank();
+                if (m_RemoveTime > limitTime)
+                {
+                    GameManger.m_Main.Hit();
+                    OnDie();
+                }
+            }
+        }
+    }
 
     public void OnClickMonster()
     {
@@ -22,7 +54,7 @@ public class MangerUnit : MonoBehaviour
         {
             return;
         }
-        m_Hp --;
+        m_Hp--;
         if (m_Hp <= 0)
         {
             int score = (GameManger.m_Main.GetHardRank() == 1) ? 1 : 2;
@@ -31,6 +63,7 @@ public class MangerUnit : MonoBehaviour
         }
 
     }
+
     private void OnDie()
     {
         StartCoroutine(FadeOut());
@@ -46,73 +79,42 @@ public class MangerUnit : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration); // ­pºâ³z©ú«×ªº´¡­È
-            Color newColor = new Color(1f, 1f, 1f, alpha); // ®Ú¾Ú³z©ú«×³Ğ«Ø·sªºÃC¦â
-            gameObject.GetComponent<Renderer>().material.color = newColor; // ±Nª«ÅéªºÃC¦â³]©w¬°·sªºÃC¦â
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration); // è¨ˆç®—é€æ˜åº¦çš„æ’å€¼
+            Color newColor = new Color(1f, 1f, 1f, alpha); // æ ¹æ“šé€æ˜åº¦å‰µå»ºæ–°çš„é¡è‰²
+            gameObject.GetComponent<Renderer>().material.color = newColor; // å°‡ç‰©é«”çš„é¡è‰²è¨­å®šç‚ºæ–°çš„é¡è‰²
 
-            elapsedTime += Time.deltaTime; // §ó·s¤w¹L¥hªº®É¶¡
-            yield return null; // µ¥«İ¤U¤@´V
+            elapsedTime += Time.deltaTime; // æ›´æ–°å·²éå»çš„æ™‚é–“
+            yield return null; // ç­‰å¾…ä¸‹ä¸€å¹€
         }
 
-        gameObject.SetActive(false); // °±¥Îª«Åé¡]ÁôÂÃª«Åé¡^
-        m_IsLive = false; // ³]©w¬°«D¦s¬¡ª¬ºA
-        AddTime(); // ©I¥s AddTime ¤èªk
-    }
-    void Start()
-    {
-        AddTime();
-        m_Hp = m_MaxHp; // ³]©w¦a¹«ªº·í«e¥Í©R­È¬°³Ì¤j¥Í©R­È
-        //gameObject.SetActive(true);
+        gameObject.SetActive(false); // åœç”¨ç‰©é«”ï¼ˆéš±è—ç‰©é«”ï¼‰
+        m_IsLive = false; // è¨­å®šç‚ºéå­˜æ´»ç‹€æ…‹
+        AddTime(); // å‘¼å« AddTime æ–¹æ³•
     }
 
-
-    void Update()
-    {
-      if(m_IsLive)
-        {
-            if (transform.localScale.x < 1)
-            {
-                transform.localScale += new Vector3(1f,1f, 1f) * Time.deltaTime;
-            }
-            else
-            {
-                m_IsCanClick = true;
-                
-            }
-            if (m_IsCanClick)
-            {
-                m_RemoveTime += Time.deltaTime;
-                int limitTime = 5 - GameManger.m_Main.GetHardRank();
-                if (m_RemoveTime > limitTime)
-                {
-                    GameManger.m_Main.Hit();
-                    OnDie();
-                }
-            }
-        }
-    }
     public bool CheckTime()
     {
-    if (Time.time > m_Time)
-            {
-                return true;
-            }
-            return false;
+        if (Time.time > m_Time)
+        {
+            return true;
+        }
+        return false;
     }
+
     public void Reburn()
     {
-        
-        if (m_IsLive ==true)
+
+        if (m_IsLive == true)
         {
             return;
         }
         AddTime();
 
-        // ³Ğ«Ø¤@­Ó·sªº¦a¹«ª«¥ó
+        // å‰µå»ºä¸€å€‹æ–°çš„åœ°é¼ ç‰©ä»¶
         GameObject newUnitObj = Instantiate(gameObject);
         MangerUnit newUnit = newUnitObj.GetComponent<MangerUnit>();
 
-        // ³]©w·s¦a¹«ª«¥óªº³Ì¤j¥Í©R­È
+        // è¨­å®šæ–°åœ°é¼ ç‰©ä»¶çš„æœ€å¤§ç”Ÿå‘½å€¼
         newUnit.m_MaxHp = m_MaxHp;
 
         m_RemoveTime = 0;
@@ -123,9 +125,10 @@ public class MangerUnit : MonoBehaviour
         gameObject.SetActive(true);
 
     }
-     private void AddTime()
+
+    private void AddTime()
     {
         m_Time = Time.time + Random.Range(0.3f, 0.3f);
-    }   
-    
+    }
+
 }
