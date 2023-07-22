@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class MangerUnit : MonoBehaviour
+public class ManagerUnit : MonoBehaviour
 {
 
     private float m_Time = 0;
@@ -13,13 +13,12 @@ public class MangerUnit : MonoBehaviour
     private int m_Hp;//生命值
     private float m_RemoveTime = 0;
     private int m_MaxHp;
-    private Dictionary<MangerUnit, int> m_MaxHpDict = new Dictionary<MangerUnit, int>();
+    private Dictionary<ManagerUnit, int> m_MaxHpDict = new Dictionary<ManagerUnit, int>();
 
     void Start()
     {
         AddTime();
         m_Hp = m_MaxHp; // 設定地鼠的當前生命值為最大生命值
-        //gameObject.SetActive(true);
     }
 
     void Update()
@@ -35,13 +34,14 @@ public class MangerUnit : MonoBehaviour
                 m_IsCanClick = true;
 
             }
+
             if (m_IsCanClick)
             {
                 m_RemoveTime += Time.deltaTime;
-                int limitTime = 5 - GameManger.m_Main.GetHardRank();
+                int limitTime = 5 - GameManager.Instance.GetHardRank();
                 if (m_RemoveTime > limitTime)
                 {
-                    GameManger.m_Main.Hit();
+                    GameManager.Instance.Hit();
                     OnDie();
                 }
             }
@@ -57,11 +57,10 @@ public class MangerUnit : MonoBehaviour
         m_Hp--;
         if (m_Hp <= 0)
         {
-            int score = (GameManger.m_Main.GetHardRank() == 1) ? 1 : 2;
-            GameManger.m_Main.AddScore(score);
+            int score = (GameManager.Instance.GetHardRank() == 1) ? 1 : 2;
+            GameManager.Instance.AddScore(score);
             OnDie();
         }
-
     }
 
     private void OnDie()
@@ -92,18 +91,10 @@ public class MangerUnit : MonoBehaviour
         AddTime(); // 呼叫 AddTime 方法
     }
 
-    public bool CheckTime()
-    {
-        if (Time.time > m_Time)
-        {
-            return true;
-        }
-        return false;
-    }
+    public bool CheckTime() => Time.time > m_Time;
 
     public void Reburn()
     {
-
         if (m_IsLive == true)
         {
             return;
@@ -112,7 +103,7 @@ public class MangerUnit : MonoBehaviour
 
         // 創建一個新的地鼠物件
         GameObject newUnitObj = Instantiate(gameObject);
-        MangerUnit newUnit = newUnitObj.GetComponent<MangerUnit>();
+        ManagerUnit newUnit = newUnitObj.GetComponent<ManagerUnit>();
 
         // 設定新地鼠物件的最大生命值
         newUnit.m_MaxHp = m_MaxHp;
