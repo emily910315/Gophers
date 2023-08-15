@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public Text m_HpText = null;
     public Text m_ScoreText = null;
     public ManagerUnit[] m_AllUnit = null;
@@ -102,9 +101,9 @@ public class GameManager : MonoBehaviour
                 if (countdownTimer <= 0f)
                 {
                     // 開始倒數時，生命值減少
-                    this.m_Hp--;
+                    m_Hp--;
 
-                    if (this.m_Hp == 0)
+                    if (m_Hp == 0)
                         PlayerDie();
 
                     // 重置倒數計時器
@@ -137,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Countdown()
     {
-        for (; this.m_Hp > 0; this.m_Hp--)
+        for (; m_Hp > 0; m_Hp--)
             yield return new WaitForSeconds(1f); // 等待1秒
 
         PlayerDie();
@@ -145,7 +144,7 @@ public class GameManager : MonoBehaviour
 
     public void OnClick()
     {
-        this.m_Hp = 5;
+        m_Hp = 5;
         float currentTime = Time.time;
         // 當有點擊時，重置倒數計時器
         countdownTimer = countdownTime;
@@ -174,9 +173,9 @@ public class GameManager : MonoBehaviour
 
     public void Hit()
     {
-        this.m_Hp -= 1;//生命值扣1
+        m_Hp -= 1;//生命值扣1
 
-        if (this.m_Hp == 0)
+        if (m_Hp == 0)
             PlayerDie();
     }
 
@@ -193,7 +192,7 @@ public class GameManager : MonoBehaviour
         {
             m_HankRank = 2;
         }
-        else if(m_HankRank == 2 && m_Score > 30)
+        else if (m_HankRank == 2 && m_Score > 30)
         {
             m_HankRank = 3;
         }

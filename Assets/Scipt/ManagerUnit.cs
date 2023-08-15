@@ -6,21 +6,21 @@ using UnityEngine.UI;
 
 public class ManagerUnit : MonoBehaviour
 {
-   
+
     private float m_Time = 0;
     private bool m_IsLive = false;
     private bool m_IsCanClick = false;
 
-    private float m_Hp=0;//生命值
+    private float m_Hp = 0;//生命值
     private float m_RemoveTime = 0;
     private int m_MaxHp;
     private Dictionary<ManagerUnit, int> m_MaxHpDict = new Dictionary<ManagerUnit, int>();
 
-    private Text m_HitTimes = null;
+    private TextMeshPro m_HitTimes = null;
 
     private void Awake()
     {
-        m_HitTimes = gameObject.GetComponentInChildren<Text>();
+        m_HitTimes = gameObject.GetComponentInChildren<TextMeshPro>();
     }
 
     public void OnClickMonster()
@@ -80,8 +80,6 @@ public class ManagerUnit : MonoBehaviour
         }
     }
 
-
-
     private void OnDie()
     {
         StartCoroutine(FadeOut());
@@ -122,27 +120,27 @@ public class ManagerUnit : MonoBehaviour
 
     public void Reburn()
     {
-        Debug.Log("Reburn() called from: " + transform.name);
-        if (m_IsLive == true)
-        {
+        if (m_IsLive)
             return;
-        }
+
+        Debug.Log("Reburn() called from: " + transform.name);
         AddTime();
 
         // 創建一個新的地鼠物件
-        GameObject newUnitObj = Instantiate(this.gameObject);
-        ManagerUnit newUnit = newUnitObj.GetComponent<ManagerUnit>();
+        //GameObject newUnitObj = Instantiate(gameObject);
+        //ManagerUnit newUnit = newUnitObj.GetComponent<ManagerUnit>();
 
         // 設定新地鼠物件的最大生命值
-        newUnit.m_MaxHp = m_MaxHp;
+        //newUnit.m_MaxHp = m_MaxHp;
 
         m_RemoveTime = 0;
         m_Hp = GameManager.Instance.GetHardRank();
-        m_HitTimes.text = m_Hp.ToString();
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        //m_HitTimes.text = m_Hp.ToString();
+        //transform.localScale = new Vector3(1f, 1f, 1f);
         m_IsLive = true;
         m_IsCanClick = false;
-        newUnitObj.SetActive(true);
+        //newUnitObj.SetActive(true);
+        gameObject.SetActive(true);
 
     }
 
