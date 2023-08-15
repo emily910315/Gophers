@@ -2,19 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ManagerUnit : MonoBehaviour
 {
-
+   
     private float m_Time = 0;
     private bool m_IsLive = false;
     private bool m_IsCanClick = false;
 
-    private int m_Hp;//生命值
+    private float m_Hp=0;//生命值
     private float m_RemoveTime = 0;
     private int m_MaxHp;
     private Dictionary<ManagerUnit, int> m_MaxHpDict = new Dictionary<ManagerUnit, int>();
 
+    private Text m_HitTimes = null;
+
+    private void Awake()
+    {
+        m_HitTimes = gameObject.GetComponentInChildren<Text>();
+    }
+
+    public void OnClickMonster()
+    {
+        gameObject.SetActive(false);
+        if (m_IsCanClick == false)
+        {
+            return;
+        }
+        m_Hp--;
+
+        m_HitTimes.text = m_Hp.ToString();
+        if (m_Hp <= 0)
+        {
+            int score = (GameManager.Instance.GetHardRank() == 1) ? 1 : 2;
+            GameManager.Instance.AddScore(score);
+            OnDie();
+        }
+        m_IsLive = false;
+    }
     void Start()
     {
         AddTime();
@@ -23,6 +49,12 @@ public class ManagerUnit : MonoBehaviour
 
     void Update()
     {
+        if (Time.time > m_Time)
+        {
+            AddTime();
+            gameObject.SetActive(false);
+        }
+
         if (m_IsLive)
         {
             if (transform.localScale.x < 1)
@@ -48,20 +80,7 @@ public class ManagerUnit : MonoBehaviour
         }
     }
 
-    public void OnClickMonster()
-    {
-        if (m_IsCanClick == false)
-        {
-            return;
-        }
-        m_Hp--;
-        if (m_Hp <= 0)
-        {
-            int score = (GameManager.Instance.GetHardRank() == 1) ? 1 : 2;
-            GameManager.Instance.AddScore(score);
-            OnDie();
-        }
-    }
+
 
     private void OnDie()
     {
@@ -74,7 +93,7 @@ public class ManagerUnit : MonoBehaviour
     private IEnumerator FadeOut()
     {
         float duration = 1.0f;
-        float elapsedTime = 0.0f;
+        float elapsedTime = 0.01f;
 
         while (elapsedTime < duration)
         {
@@ -91,10 +110,19 @@ public class ManagerUnit : MonoBehaviour
         AddTime(); // 呼叫 AddTime 方法
     }
 
-    public bool CheckTime() => Time.time > m_Time;
+    public bool CheckTime()
+    {
+        if (Time.time > m_Time)
+        {
+            //m_Time = Random.Range(0.01f, 3f);
+            return true;
+        }
+        return false;
+    }
 
     public void Reburn()
     {
+        Debug.Log("Reburn() called from: " + transform.name);
         if (m_IsLive == true)
         {
             return;
@@ -102,24 +130,25 @@ public class ManagerUnit : MonoBehaviour
         AddTime();
 
         // 創建一個新的地鼠物件
-        GameObject newUnitObj = Instantiate(gameObject);
+        GameObject newUnitObj = Instantiate(this.gameObject);
         ManagerUnit newUnit = newUnitObj.GetComponent<ManagerUnit>();
 
         // 設定新地鼠物件的最大生命值
         newUnit.m_MaxHp = m_MaxHp;
 
         m_RemoveTime = 0;
-        //m_Hp = GameManger.m_Main.GetHardRank();
+        m_Hp = GameManager.Instance.GetHardRank();
+        m_HitTimes.text = m_Hp.ToString();
         transform.localScale = new Vector3(1f, 1f, 1f);
         m_IsLive = true;
         m_IsCanClick = false;
-        gameObject.SetActive(true);
+        newUnitObj.SetActive(true);
 
     }
 
     private void AddTime()
     {
-        m_Time = Time.time + Random.Range(0.3f, 0.3f);
+        m_Time = Time.time + Random.Range(0.01f, 0.10f);
     }
 
 }

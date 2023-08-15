@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public Text m_HpText = null;
     public Text m_ScoreText = null;
     public ManagerUnit[] m_AllUnit = null;
@@ -60,6 +61,10 @@ public class GameManager : MonoBehaviour
     private float doubleClickThreshold = 0.3f; //雙擊值域
     private bool isDoubleClick = false; // 是否是雙擊
 
+    public void Awake()
+    {
+        m_instance = this;
+    }
     void Start()
     {
         // 倒計時
@@ -68,6 +73,19 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        for (int i = 0; i < m_AllUnit.Length; i++)
+        {
+            ManagerUnit unit = m_AllUnit[i];
+            if (unit.CheckTime() == true)
+            {
+                unit.Reburn();
+            }
+            else
+            {
+
+            }
+        }
+
         if (!m_PlayerLive)
             return;
 
@@ -171,7 +189,14 @@ public class GameManager : MonoBehaviour
     {
         if (!m_PlayerLive)
             return;
-
+        if (m_HankRank == 1 && m_Score > 5)
+        {
+            m_HankRank = 2;
+        }
+        else if(m_HankRank == 2 && m_Score > 30)
+        {
+            m_HankRank = 3;
+        }
         // 如果是雙擊，多加兩分
         if (isDoubleClick)
             n += 2;
