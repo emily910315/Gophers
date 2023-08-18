@@ -6,147 +6,114 @@ using UnityEngine.UI;
 
 public class ManagerUnit : MonoBehaviour
 {
-
     private float m_Time = 0;
-    private bool m_IsLive = false;
-    private bool m_IsCanClick = false;
+    //private bool m_IsLive = false;//按鈕是否存活
+    //private bool m_IsCanClick = false;//是否點擊按鈕
 
-    private float m_Hp = 0;//生命值
-    private float m_RemoveTime = 0;
-    private int m_MaxHp;
-    private Dictionary<ManagerUnit, int> m_MaxHpDict = new Dictionary<ManagerUnit, int>();
+    //private float m_Hp=0;//生命值
+    //private int m_MaxHp;//最大生命值
+    //private Dictionary<ManagerUnit, int> m_MaxHpDict = new Dictionary<ManagerUnit, int>();
 
-    private TextMeshPro m_HitTimes = null;
+    //private Text m_HitTimes = null;
 
-    private void Awake()
-    {
-        m_HitTimes = gameObject.GetComponentInChildren<TextMeshPro>();
-    }
-
-    public void OnClickMonster()
-    {
-        gameObject.SetActive(false);
-        if (m_IsCanClick == false)
-        {
-            return;
-        }
-        m_Hp--;
-
-        m_HitTimes.text = m_Hp.ToString();
-        if (m_Hp <= 0)
-        {
-            int score = (GameManager.Instance.GetHardRank() == 1) ? 1 : 2;
-            GameManager.Instance.AddScore(score);
-            OnDie();
-        }
-        m_IsLive = false;
-    }
     void Start()
     {
-        AddTime();
-        m_Hp = m_MaxHp; // 設定地鼠的當前生命值為最大生命值
+        Disable();
+        //m_Hp = m_MaxHp; // 設定按鈕的當前生命值為最大生命值
     }
 
     void Update()
     {
-        if (Time.time > m_Time)
-        {
-            AddTime();
-            gameObject.SetActive(false);
-        }
+        //if (m_IsLive)
+        //{
+        //    if (transform.localScale.x < 1)
+        //    {//按紐大小生成中
+        //        transform.localScale += new Vector3(1f, 1f, 1f) * Time.deltaTime;
+        //    }
+        //    else
+        //    {//按鈕生成至一定大小才可點擊
+        //        m_IsCanClick = true;
 
-        if (m_IsLive)
-        {
-            if (transform.localScale.x < 1)
-            {
-                transform.localScale += new Vector3(1f, 1f, 1f) * Time.deltaTime;
-            }
-            else
-            {
-                m_IsCanClick = true;
+        //    }
 
-            }
+        //    if (m_IsCanClick)
+        //    {
+        //        m_RemoveTime += Time.deltaTime;//按鈕已存在時間
+        //        /*int limitTime = 5 - GameManager.Instance.GetHardRank();
+        //        if (m_RemoveTime > limitTime)
+        //        {//按鈕未在已存在時間內點擊
+        //            GameManager.Instance.Hit();
+        //            OnDie();//按鈕消失
+        //        }*/
+        //    }
+        //}
+    }
 
-            if (m_IsCanClick)
-            {
-                m_RemoveTime += Time.deltaTime;
-                int limitTime = 5 - GameManager.Instance.GetHardRank();
-                if (m_RemoveTime > limitTime)
-                {
-                    GameManager.Instance.Hit();
-                    OnDie();
-                }
-            }
-        }
+    public void OnClickMonster()
+    {
+        SwitchActive();
+        //按鈕點擊事件
+        //if (m_IsCanClick == true)
+        //{
+        //    return;
+        //}
+        //m_Hp--;//如果不點擊則生命值-1
+
+        //m_HitTimes.text = m_Hp.ToString();//更新點擊次數
+        //if (m_Hp <= 0)
+        //{//檢查生命值是否<0
+        //    //int score = (GameManager.Instance.GetHardRank() == 1) ? 1 : 2;
+        //    GameManager.Instance.AddScore(1);
+        //    OnDie();//按鈕消失
+        //}
+        //m_IsLive = false;//無按鈕
     }
 
     private void OnDie()
-    {
-        StartCoroutine(FadeOut());
-        gameObject.SetActive(false);
-        m_IsLive = false;
-        AddTime();
+    {//按鈕消失
+        StartCoroutine(FadeOut());//漸隱效果
+        gameObject.SetActive(false);//無按鈕
+        //m_IsLive = false;//按鈕不出現
     }
 
     private IEnumerator FadeOut()
     {
-        float duration = 1.0f;
-        float elapsedTime = 0.01f;
+        float duration = 1.0f;//按鈕出現到消失的時間
+        float elapsedTime = 0.01f;//按鈕剛出現時間
 
         while (elapsedTime < duration)
         {
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration); // 計算透明度的插值
-            Color newColor = new Color(1f, 1f, 1f, alpha); // 根據透明度創建新的顏色
-            gameObject.GetComponent<Renderer>().material.color = newColor; // 將物體的顏色設定為新的顏色
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration); // 按鈕漸隱效果
+            Color newColor = new Color(1f, 1f, 1f, alpha); // 得到按鈕完整顏色效果
+            gameObject.GetComponent<Renderer>().material.color = newColor;
 
             elapsedTime += Time.deltaTime; // 更新已過去的時間
             yield return null; // 等待下一幀
         }
 
-        gameObject.SetActive(false); // 停用物體（隱藏物體）
-        m_IsLive = false; // 設定為非存活狀態
-        AddTime(); // 呼叫 AddTime 方法
+        gameObject.SetActive(true);
+        //m_IsLive = true; // 有按鈕
     }
-
     public bool CheckTime()
     {
-        if (Time.time > m_Time)
-        {
-            //m_Time = Random.Range(0.01f, 3f);
-            return true;
-        }
-        return false;
-    }
 
-    public void Reburn()
-    {
-        if (m_IsLive)
-            return;
-
-        Debug.Log("Reburn() called from: " + transform.name);
-        AddTime();
-
-        // 創建一個新的地鼠物件
-        //GameObject newUnitObj = Instantiate(gameObject);
-        //ManagerUnit newUnit = newUnitObj.GetComponent<ManagerUnit>();
-
-        // 設定新地鼠物件的最大生命值
-        //newUnit.m_MaxHp = m_MaxHp;
-
-        m_RemoveTime = 0;
-        m_Hp = GameManager.Instance.GetHardRank();
-        //m_HitTimes.text = m_Hp.ToString();
-        //transform.localScale = new Vector3(1f, 1f, 1f);
-        m_IsLive = true;
-        m_IsCanClick = false;
-        //newUnitObj.SetActive(true);
-        gameObject.SetActive(true);
-
+        return Time.time > m_Time;//檢查重新出現時間是否已大於當前時間
     }
 
     private void AddTime()
     {
-        m_Time = Time.time + Random.Range(0.01f, 0.10f);
+        m_Time = Time.time + Random.Range(1f, 3f);
     }
 
+    public void SwitchActive()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+        AddTime();
+    }
+
+    private void Disable()
+    {
+        gameObject.SetActive(false);
+        AddTime();
+    }
 }
