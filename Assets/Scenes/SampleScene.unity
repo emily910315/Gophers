@@ -481,7 +481,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 147678585}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -630,7 +630,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 160828304}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -955,7 +955,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 365623594}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1238,7 +1238,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 435925139}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1386,7 +1386,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 452956205}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2267,7 +2267,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1022657090}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2654,7 +2654,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1143560727}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3089,7 +3089,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1682699217}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4273,7 +4273,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2096944469}
         m_TargetAssemblyTypeName: ManagerUnit, Assembly-CSharp
-        m_MethodName: Reburn
+        m_MethodName: OnClickMonster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
