@@ -21,29 +21,13 @@ public class ManagerUnit : MonoBehaviour
         Disable();
     }
 
-    
     public void OnClickMonster()
     {
         //按鈕點擊事件
-<<<<<<< Updated upstream
         SwitchActive();
-        GameManager.Instance.ResetHp();//重置生命值並重新計時
-=======
-        gameObject.SetActive(false);
 
-        if (m_IsCanClick == true)
-        {
-            return;
-        }
-        m_Hp--;//如果不點擊則生命值-1
-        m_HitTimes.text = m_Hp.ToString();//更新點擊次數
-
-
-        if (m_Hp <= 0)//檢查生命值是否<0
-        {
-            gameObject.SetActive(false); ;//按鈕關閉
-        }
->>>>>>> Stashed changes
+        GameManager.Instance.ResetHp();//重製生命值
+        GameManager.Instance.AddScore(1); // 增加一分
     }
 
     public bool CheckTime() => Time.time > m_SwitchTime;//檢查當下時間是否大於隨機產生時間

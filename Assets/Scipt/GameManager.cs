@@ -23,8 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text m_ScoreText = null; //分數文字
     [SerializeField] ManagerUnit[] m_AllUnit = null; //所有的按紐
 
-    private bool m_PlayerLive;//玩家存活
-    private static int MAX_HP = 5;//生命值最大預設為5
+    private static int MAX_HP = 5;//生命值預設最大為5
     private int _m_Hp = MAX_HP;
     private int m_Hp
     {
@@ -53,20 +52,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private bool m_PlayerLive;//玩家存活    
 
-
-    //private float lastClickTime = 0f; // 上次點擊的時間
-    //private float doubleClickThreshold = 0.3f; //雙擊值域
-    //private bool isDoubleClick = false; // 是否是雙擊
-
-    public void Awake()
-    {
-        m_instance = this;
-    }
 
     void Start()
     {
-        //玩家存活
         m_PlayerLive = true;
         // 倒計時
         StartCountdown();
@@ -84,15 +74,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-<<<<<<< Updated upstream
         if (!m_PlayerLive)
             return;
-=======
-       
->>>>>>> Stashed changes
     }
 
-    public void ResetHp()//重置生命值並重新計時
+    public void ResetHp()
     {
         if (!m_PlayerLive)
             return;
@@ -107,84 +93,21 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Countdown()
     {
-<<<<<<< Updated upstream
         //協程
         for (; m_Hp > 0; m_Hp--)
-=======
-        //無點擊後進入迴圈倒數生命值
-        for (; this.m_Hp > 0; this.m_Hp--)
->>>>>>> Stashed changes
         {
             yield return new WaitForSeconds(1f); // 等待1秒
         }
 
-<<<<<<< Updated upstream
         m_PlayerLive = false;
-=======
-        if (this.m_Hp == 0)
-        {
-            m_PlayerLive = false;//玩家死亡
-        }
-            
-}
+    }
 
-    public void OnClick()
+    public void AddScore(int pointsToAdd)
     {
-        m_Hp();
+        if (!m_PlayerLive)
+            return;
 
-            isCountingDown = false; // 停止倒數
-            countdownTimer = countdownTime;//重置倒數計時器
-  
-        
-        
-        
-        
-        //float currentTime = Time.time;
-
-        //    /*if (currentTime - lastClickTime <= doubleClickThreshold)
-        //    {
-        //        // 雙擊
-        //        // AddScore(2);
-        //        isDoubleClick = true;
-        //    }
-        //    else
-        //    {
-        //        // 單擊
-        //        AddScore(1);
-        //        isDoubleClick = false;
-        //    }*/
-
-        //    //lastClickTime = currentTime;
-        //}
-
-        ///*public int GetHardRank()
-        //{
-        //    return m_HankRank;
-        //}*/
-
-
-
-
-
-        //public void AddScore(int pointsToAdd)
-        //{
-        //    if (!m_PlayerLive)//玩家是否活著
-        //        return;
-
-        //    /*if (m_HankRank == 1 && m_Score > 5)
-        //    {
-        //        m_HankRank = 2;
-        //    }
-        //    else if(m_HankRank == 2 && m_Score > 30)
-        //    {
-        //        m_HankRank = 3;
-        //    }
-        //    // 如果是雙擊，多加兩分
-        //    if (isDoubleClick)
-        //        n += 2;*/
-        //    m_Score += pointsToAdd; // 增加分數
-        //    m_ScoreText.text = m_Score.ToString(); // 更新分數
-        //    //this.m_Score += n;
->>>>>>> Stashed changes
+        m_Score += pointsToAdd;
+        m_ScoreText.text = m_Score.ToString(); // 更新分數文字顯示
     }
 }
