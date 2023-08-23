@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager m_instance = null;
+    static GameManager m_instance = null;
     public static GameManager Instance
     {
         get
@@ -21,11 +21,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Text m_HpText = null; //生命值文字
     [SerializeField] Text m_ScoreText = null; //分數文字
-    [SerializeField] ManagerUnit[] m_AllUnit = null; //所有的按紐
 
-    private static int MAX_HP = 5;
-    private int _m_Hp = MAX_HP;
-    private int m_Hp
+    [SerializeField] GameObject UnitsGrid = null; //所有按鈕的父物件
+    [SerializeField] ManagerUnit[] m_AllUnits = null; //所有的按紐
+
+    static int MAX_HP = 5;
+    int _m_Hp = MAX_HP;
+    int m_Hp
     {
         get
         {
@@ -38,8 +40,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private int _m_Score = 0;//分數預設為0
-    private int m_Score
+    int _m_Score = 0;//分數預設為0
+    int m_Score
     {
         get
         {
@@ -52,29 +54,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool m_PlayerLive;//玩家存活    
+    bool m_PlayerLive;//玩家存活    
 
-    //private float lastClickTime = 0f; // 上次點擊的時間
-    //private float doubleClickThreshold = 0.3f; //雙擊值域
-    //private bool isDoubleClick = false; // 是否是雙擊
-
-    public void Awake()
-    {
-        m_instance = this;
-    }
+    //float lastClickTime = 0f; // 上次點擊的時間
+    //float doubleClickThreshold = 0.3f; //雙擊值域
+    //bool isDoubleClick = false; // 是否是雙擊
 
     void Start()
     {
+        m_AllUnits = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
         m_PlayerLive = true;
         // 倒計時
-        StartCountdown();
+        StartCoroutine(Countdown());
     }
 
     void Update()
     {
-        for (int i = 0; i < m_AllUnit.Length; i++)
+        foreach (ManagerUnit unit in m_AllUnits)
         {
-            ManagerUnit unit = m_AllUnit[i];
             if (unit.CheckTime())
             {
                 //檢查按鈕重新生成時間，若到達則重新生成
@@ -93,10 +90,13 @@ public class GameManager : MonoBehaviour
 
         m_Hp = MAX_HP;
     }
-    private void StartCountdown()
+
+    public void UpdateScore(int score)
     {
-        //開始倒數計時的協程
-        StartCoroutine(Countdown());
+        if (!m_PlayerLive)
+            return;
+
+        m_Score += score;
     }
 
     private IEnumerator Countdown()
