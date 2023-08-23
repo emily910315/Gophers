@@ -108,6 +108,24 @@ public class GameManager : MonoBehaviour
             return;
 
         m_Score += pointsToAdd;
-        m_ScoreText.text = m_Score.ToString(); // 更新分數文字顯示
+        m_ScoreText.text = m_Score.ToString(); // 更新分數顯示
     }
-}
+
+    public void SubtractScore(int pointsToSubtract)
+    {
+        if (!m_PlayerLive)
+            return;
+
+        m_Score -= pointsToSubtract;
+        m_ScoreText.text = m_Score.ToString();
+
+        if (m_Score <= 0)
+        {
+            // 遊戲結束
+        }
+    }
+
+}    
+
+
+
