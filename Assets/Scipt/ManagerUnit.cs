@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class ManagerUnit : MonoBehaviour
 {
-
+    [SerializeField] private int m_Score;
     private float m_SwitchTime;//隨機時間
     private Text m_HitTimes = null;//點擊次數
     private int m_ScoreValue = 0; // 預設為 0 分
-    public Color redColor; // 紅色
-    public Color blueColor; // 藍色
+<<<<<<< Updated upstream
+
+=======
+    [SerializeField] private int m_Score;
+>>>>>>> Stashed changes
 
 
     private void Awake()
@@ -22,7 +25,7 @@ public class ManagerUnit : MonoBehaviour
 
     void Start()
     {
-        Disable();
+        //Disable();
         
     }
 
@@ -32,17 +35,13 @@ public class ManagerUnit : MonoBehaviour
         SwitchActive();
 
         GameManager.Instance.ResetHp();//重製生命值
-        //GameManager.Instance.AddScore(1); // 增加一分
+        GameManager.Instance.UpdateScore(m_Score); // 增加一分
 
-        Image buttonImage = GetComponent<Image>();
-        if (GetComponent<Image>().color == redColor)
-        {
-            GameManager.Instance.AddScore(1); // 加一分
-        }
-        else if (GetComponent<Image>().color  == blueColor)
-        {
-            GameManager.Instance.SubtractScore(1); // 扣一分
-        }
+<<<<<<< Updated upstream
+ 
+=======
+        
+>>>>>>> Stashed changes
 
 
     }
@@ -65,16 +64,7 @@ public class ManagerUnit : MonoBehaviour
         gameObject.SetActive(!gameObject.activeSelf);//觸發事件後按鈕產生回應
         AddTime();
 
-        Image buttonImage = GetComponent<Image>();
-        if (m_ScoreValue > 0)
-        {
-            buttonImage.color = redColor; // 設定紅色
-        }
-        else if (m_ScoreValue < 0)
-        {
-            buttonImage.color = blueColor; // 設定藍色
-        }
-
+        
 
     }
 

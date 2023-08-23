@@ -21,7 +21,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Text m_HpText = null; //生命值文字
     [SerializeField] Text m_ScoreText = null; //分數文字
+<<<<<<< Updated upstream
     [SerializeField] ManagerUnit[] m_AllUnit = null; //所有的按紐
+=======
+    [SerializeField] ManagerUnit[] m_AllUnits = null; //所有的按紐
+>>>>>>> Stashed changes
+    [SerializeField] GameObject UnitsGrid = null;
 
     private static int MAX_HP = 5;//生命值預設最大為5
     private int _m_Hp = MAX_HP;
@@ -57,6 +62,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+<<<<<<< Updated upstream
+        m_AllUnit = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
+=======
+        m_AllUnits = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
+>>>>>>> Stashed changes
         m_PlayerLive = true;
         // 倒計時
         StartCountdown();
@@ -64,9 +74,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < m_AllUnit.Length; i++)
+        for (int i = 0; i < m_AllUnits.Length; i++)
         {
-            ManagerUnit unit = m_AllUnit[i];
+            ManagerUnit unit = m_AllUnits[i];
             if (unit.CheckTime())
             {
                 //檢查按鈕重新生成時間，若到達則重新生成
@@ -102,27 +112,31 @@ public class GameManager : MonoBehaviour
         m_PlayerLive = false;
     }
 
-    public void AddScore(int pointsToAdd)
+<<<<<<< Updated upstream
+
+=======
+    
+>>>>>>> Stashed changes
+
+    public void UpdateScore(int score)
     {
         if (!m_PlayerLive)
             return;
 
-        m_Score += pointsToAdd;
-        m_ScoreText.text = m_Score.ToString(); // 更新分數顯示
-    }
-
-    public void SubtractScore(int pointsToSubtract)
-    {
-        if (!m_PlayerLive)
-            return;
-
-        m_Score -= pointsToSubtract;
+        m_Score += score;
         m_ScoreText.text = m_Score.ToString();
 
-        if (m_Score <= 0)
+
+        for (int i = 0; i < m_AllUnit.Length; i++)
         {
-            // 遊戲結束
+            ManagerUnit unit = m_AllUnit[i];
+            if (m_Score < 0)
+            {
+                gameObject.SetActive(false);// 遊戲結束
+            }
         }
+
+        
     }
 
 }    
