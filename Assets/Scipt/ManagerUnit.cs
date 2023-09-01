@@ -10,12 +10,6 @@ public class ManagerUnit : MonoBehaviour
     private float m_SwitchTime;//隨機時間
     private Text m_HitTimes = null;//點擊次數
     private int m_ScoreValue = 0; // 預設為 0 分
-<<<<<<< Updated upstream
-
-=======
-    [SerializeField] private int m_Score;
->>>>>>> Stashed changes
-
 
     private void Awake()
     {
@@ -26,7 +20,7 @@ public class ManagerUnit : MonoBehaviour
     void Start()
     {
         //Disable();
-        
+
     }
 
     public void OnClickMonster()
@@ -36,13 +30,6 @@ public class ManagerUnit : MonoBehaviour
 
         GameManager.Instance.ResetHp();//重製生命值
         GameManager.Instance.UpdateScore(m_Score); // 增加一分
-
-<<<<<<< Updated upstream
- 
-=======
-        
->>>>>>> Stashed changes
-
 
     }
 
@@ -64,7 +51,7 @@ public class ManagerUnit : MonoBehaviour
         gameObject.SetActive(!gameObject.activeSelf);//觸發事件後按鈕產生回應
         AddTime();
 
-        
+
 
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private static GameManager m_instance = null;
+
     public static GameManager Instance
     {
         get
@@ -21,15 +22,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Text m_HpText = null; //生命值文字
     [SerializeField] Text m_ScoreText = null; //分數文字
-<<<<<<< Updated upstream
     [SerializeField] ManagerUnit[] m_AllUnit = null; //所有的按紐
-=======
     [SerializeField] ManagerUnit[] m_AllUnits = null; //所有的按紐
->>>>>>> Stashed changes
     [SerializeField] GameObject UnitsGrid = null;
 
     private static int MAX_HP = 5;//生命值預設最大為5
     private int _m_Hp = MAX_HP;
+
     private int m_Hp
     {
         get
@@ -62,11 +61,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-<<<<<<< Updated upstream
         m_AllUnit = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
-=======
+
         m_AllUnits = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
->>>>>>> Stashed changes
+
         m_PlayerLive = true;
         // 倒計時
         StartCountdown();
@@ -85,7 +83,10 @@ public class GameManager : MonoBehaviour
         }
 
         if (!m_PlayerLive)
-            return;
+        {
+            gameObject.SetActive(false);//不再繼續生成按鈕
+        }
+            
     }
 
     public void ResetHp()
@@ -94,7 +95,9 @@ public class GameManager : MonoBehaviour
             return;
 
         m_Hp = MAX_HP;
+ 
     }
+
     private void StartCountdown()
     {
         //開始倒數計時的協程
@@ -111,12 +114,6 @@ public class GameManager : MonoBehaviour
 
         m_PlayerLive = false;
     }
-
-<<<<<<< Updated upstream
-
-=======
-    
->>>>>>> Stashed changes
 
     public void UpdateScore(int score)
     {
@@ -135,11 +132,9 @@ public class GameManager : MonoBehaviour
                 gameObject.SetActive(false);// 遊戲結束
             }
         }
-
-        
     }
 
-}    
+}
 
 
 
