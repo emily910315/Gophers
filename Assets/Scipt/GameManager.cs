@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,7 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] ManagerUnit[] m_AllUnits = null; //所有的按紐
     [SerializeField] GameObject UnitsGrid = null;
 
-    private static int MAX_HP = 5;//生命值預設最大為5
+
+    private static int MAX_HP = 10;//生命值預設最大為5
     private int _m_Hp = MAX_HP;
 
     private int m_Hp
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private int _m_Score = 0;//分數預設為0
+    private int _m_Score = 5;//分數預設為0
     private int m_Score
     {
         get
@@ -58,13 +60,48 @@ public class GameManager : MonoBehaviour
 
     private bool m_PlayerLive;//玩家存活    
 
+    [SerializeField] GameObject bg;
+    [SerializeField] GameObject instruction;
+    [SerializeField] GameObject win;
+
+
+    void gamemeunopen()
+    {
+        Time.timeScale = 0f;
+        bg.SetActive(true);
+    }
+
+    public void gamemeunclose()
+    {
+        Time.timeScale = 1f;
+        bg.SetActive(false);
+    }
+
+    public void instructionopen()
+    {
+        Time.timeScale = 0f;
+        bg.SetActive(false);
+        instruction.SetActive(true);
+    }
+
+    public void instructionclose()
+    {
+        Time.timeScale = 1f;
+        bg.SetActive(false);
+        instruction.SetActive(false);
+    }
+
+    public void restart()
+    {
+        win.SetActive(false);
+        SceneManager.LoadScene("SampleScene");
+    }
 
     void Start()
     {
         m_AllUnit = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
 
         m_AllUnits = UnitsGrid.GetComponentsInChildren<ManagerUnit>();
-
         m_PlayerLive = true;
         // 倒計時
         StartCountdown();
@@ -72,8 +109,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < m_AllUnits.Length; i++)
-        {
+
+            for (int i = 0; i < m_AllUnits.Length; i++)
+            {
             ManagerUnit unit = m_AllUnits[i];
             if (unit.CheckTime())
             {
@@ -132,6 +170,7 @@ public class GameManager : MonoBehaviour
                 gameObject.SetActive(false);// 遊戲結束
             }
         }
+
     }
 
 }
