@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
         m_PlayerLive = true;
         // 倒計時
         StartCountdown();
+        gamemeunopen();
     }
 
     void Update()
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
         if (!m_PlayerLive)
         {
             gameObject.SetActive(false);//不再繼續生成按鈕
+            win.SetActive(true);
         }
             
     }
@@ -130,7 +132,10 @@ public class GameManager : MonoBehaviour
     public void ResetHp()
     {
         if (!m_PlayerLive)
+        {
             return;
+        }
+            
 
         m_Hp = MAX_HP;
  
@@ -168,6 +173,7 @@ public class GameManager : MonoBehaviour
             if (m_Score < 0)
             {
                 gameObject.SetActive(false);// 遊戲結束
+                win.SetActive(true);
             }
         }
 
